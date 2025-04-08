@@ -1,4 +1,6 @@
 *.out
+*.swp
 
 cache-lines
 cache-size
+struct-cacheline

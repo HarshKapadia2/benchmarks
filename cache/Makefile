@@ -1,4 +1,4 @@
-all: install-dep cache-line cache-size
+all: install-dep cache-line cache-size struct-cacheline
 
 install-dep:
 	sudo apt-get update
@@ -12,8 +12,12 @@ cache-size: src/cache-size.c
 	gcc -Wall -pedantic src/cache-size.c -lsodium -lm -o cache-size
 	chmod +x cache-size
 
+struct-cacheline: src/struct-cacheline.c
+	gcc -Wall -pedantic src/struct-cacheline.c -lsodium -o struct-cacheline
+	chmod +x struct-cacheline
+
 clean:
-	rm -f cache-line cache-size
+	rm -f cache-line cache-size struct-cacheline
 
 format:
 	find . -name "*.c" -or -name "*.h" | xargs clang-format -i
