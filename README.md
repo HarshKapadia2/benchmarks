@@ -8,4 +8,5 @@ optimized results.
 
 ## Benchmarks
 
-- [CPU Cache](cache)
+- CPU
+    - [Cache](cpu/cache)

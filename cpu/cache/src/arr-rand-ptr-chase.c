@@ -28,7 +28,7 @@ int main() {
                             // was an int ** typecasted to an int *, so this is
                             // like returning the pointer to its original form
 
-        volatile int *temp __attribute__((unused)) =
+        int *volatile temp __attribute__((unused)) =
             NULL; // Volatile to prevent the compiler from
                   // optimizing loop away
 
