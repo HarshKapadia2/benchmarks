@@ -8,6 +8,7 @@ int **generate_random_ptr_chase(long arr_size_bytes);
 
 int main() {
     printf("Cache size benchmark.\n\n");
+    printf("Array Size\tAccess Time Per Ele. (ns)\n");
 
     for (int i = 4; i < 30; i++) {
         long arr_size_bytes = (long)pow(2, i);
@@ -34,7 +35,7 @@ int main() {
 
         clock_gettime(CLOCK_MONOTONIC, &time_start);
 
-        for (int i = 0; i < num_itr_per_run; i++) {
+        for (int j = 0; j < num_itr_per_run; j++) {
             // Going to the next element
             next_element = (int **)*next_element;
         }
@@ -42,17 +43,23 @@ int main() {
         clock_gettime(CLOCK_MONOTONIC, &time_end);
 
         temp = *next_element + 1; // So that the compiler does not optimize the
-        // loop away
+                                  // loop away
 
         double time_diff_ns =
             (1e9 * difftime(time_end.tv_sec, time_start.tv_sec)) +
             (double)(time_end.tv_nsec - time_start.tv_nsec);
         double access_time_per_ele_ns = time_diff_ns / num_itr_per_run;
 
-        if (i < 24) {
-            printf("%ld\t\t%lf\n", arr_size_bytes, access_time_per_ele_ns);
+        if (i < 10) {
+            printf("%ld B\t\t%lf\n", arr_size_bytes, access_time_per_ele_ns);
+        } else if (i < 20) {
+            int arr_size_kiB = arr_size_bytes / 1024; // 1024 = 2e10
+
+            printf("%d kiB\t\t%lf\n", arr_size_kiB, access_time_per_ele_ns);
         } else {
-            printf("%ld\t%lf\n", arr_size_bytes, access_time_per_ele_ns);
+            int arr_size_MiB = arr_size_bytes / 1048576; // 1048576 = 2e20
+
+            printf("%d MiB\t\t%lf\n", arr_size_MiB, access_time_per_ele_ns);
         }
 
         // Cleanup
