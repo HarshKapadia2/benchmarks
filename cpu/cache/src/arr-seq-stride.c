@@ -9,7 +9,7 @@ int main() {
     int num_elements = 20000000;
     int stride[] = {1, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192};
     int num_test_itr = sizeof(stride) / sizeof(int);
-    volatile int temp __attribute__((unused)) = -1;
+    volatile int temp = 0;
     int *arr = generate_arr(num_elements);
 
     if (arr == NULL) {
@@ -21,24 +21,24 @@ int main() {
     printf("Size of 'int': %ld B\n", sizeof(int));
     printf("Cache line size: %ld B\n", sysconf(_SC_LEVEL1_DCACHE_LINESIZE));
     printf("Page size: %d B\n", getpagesize());
-    printf("Num elements: %d B\n", num_elements);
+    printf("Num elements: %d\n", num_elements);
     printf("Size of array: %ld B\n\n", num_elements * sizeof(int));
     printf("Num Stride Ele\tStride Size (B)\tNum Accesses\tTotal Time "
            "(ms)\tAccess Time Per Ele (ns)\n");
 
     for (int j = 0; j < num_test_itr; j++) {
         struct timespec time_start, time_end;
-        temp = -1;
+        int sum = 0;
 
         clock_gettime(CLOCK_MONOTONIC, &time_start);
 
         for (int i = 0; i < num_elements; i += stride[j]) {
-            temp += arr[i];
+            sum += arr[i];
         }
 
         clock_gettime(CLOCK_MONOTONIC, &time_end);
 
-        temp += 1; // So that the compiler does not optimize the loop away
+        temp += sum; // So that the compiler does not optimize the loop away
 
         double time_diff_ms =
             (1e3 * difftime(time_end.tv_sec, time_start.tv_sec)) +
