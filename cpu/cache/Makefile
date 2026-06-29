@@ -1,3 +1,6 @@
+CC = gcc
+CFLAGS = -O2 -pedantic -Wall
+
 all: install-dep arr-seq-stride arr-rand-ptr-chase
 
 install-dep:
@@ -5,11 +8,11 @@ install-dep:
 	sudo apt-get install -y libsodium23 libsodium-dev
 
 arr-seq-stride: src/arr-seq-stride.c
-	gcc -Wall -pedantic src/arr-seq-stride.c -o arr-seq-stride
+	$(CC) $(CFLAGS) src/arr-seq-stride.c -o arr-seq-stride
 	chmod +x arr-seq-stride
 
 arr-rand-ptr-chase: src/arr-rand-ptr-chase.c
-	gcc -Wall -pedantic src/arr-rand-ptr-chase.c -lsodium -lm -o arr-rand-ptr-chase
+	$(CC) $(CFLAGS) src/arr-rand-ptr-chase.c -lsodium -lm -o arr-rand-ptr-chase
 	chmod +x arr-rand-ptr-chase
 
 clean:
