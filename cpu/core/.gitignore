@@ -1,0 +1,6 @@
+*.out
+
+pthread-basics
+pthread-affinity
+atomics-basics
+
