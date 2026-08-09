@@ -1,7 +1,11 @@
 CC = gcc
 CFLAGS = -O2 -pedantic -Wall -Wextra -pthread
 
-all:
+all: ping-pong
+
+ping-pong: src/ping-pong.c
+	$(CC) $(CFLAGS) src/ping-pong.c -o ping-pong
+	chmod +x ping-pong
 
 # Only for learning purposes
 pthread-basics: src/learning/pthread-basics.c
@@ -19,7 +23,7 @@ atomics-basics: src/learning/atomics-basics.c
 	chmod +x atomics-basics
 
 clean:
-	rm -f pthread-basics pthread-affinity atomics-basics
+	rm -f ping-pong pthread-basics pthread-affinity atomics-basics
 
 install-formatter:
 	sudo apt-get install -y clang-format

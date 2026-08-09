@@ -1,5 +1,6 @@
 *.out
 
+ping-pong
 pthread-basics
 pthread-affinity
 atomics-basics

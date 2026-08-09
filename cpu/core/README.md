@@ -7,7 +7,28 @@ only for experimental and educational purposes.
 
 ## Benchmarks
 
-TBD
+### Ping Pong
+
+Measure core-to-core latency, i.e., the time it takes one cache line to migrate
+from one core to the other.
+
+```shell
+$ make ping-pong
+$ ./ping-pong
+```
+
+### Learning
+
+The CPU core benchmarks contain (for now) some learning code snippets to get
+into pthreads and atomic operations to be able to write core-related benchmarks.
+
+Go through the [Makefile](Makefile) in this directory to find the learning
+benchmarks to build. Then use the following commands to run them.
+
+```shell
+$ make <benchmark_target_to_build_from_makefile>
+$ ./benchmark-name
+```
 
 ## BIOS Settings
 
@@ -27,19 +48,6 @@ TBD
 - DDR4-3200
 - IOMMU Disabled
 
-## Learning
-
-The CPU core benchmarks contain (for now) some learning code snippets to get
-into pthreads and atomic operations to be able to write core-related benchmarks.
-
-Go through the [Makefile](Makefile) in this directory to find the learning
-benchmarks to build. Then use the following commands to run them.
-
-```shell
-$ make <benchmark_target_to_build_from_makefile>
-$ ./benchmark-name
-```
-
 ## Resources
 
 - [Multithreaded Programming (POSIX pthreads Tutorial)](https://randu.org/tutorials/threads)
@@ -47,3 +55,4 @@ $ ./benchmark-name
 - [How to Create a Thread and Execute It on Specific CPU Core](https://errbits.com/articles/how-to-create-a-thread-and-execute-it-on-specific-cpu-core.html)
 - [How to Pin a Thread to a Specific Core in a Cpuset Using C: C APIs, Parsing Cpuset, and Best Practices](https://www.funwithlinux.net/blog/pinning-a-thread-to-a-core-in-a-cpuset-through-c)
 - [Atomic Operations in C](https://dotnettutorials.net/lesson/atomic-operations-in-c)
+- [Sample program using pthread barriers](https://github.com/angrave/SystemProgramming/wiki/Sample-program-using-pthread-barriers)
