@@ -17,20 +17,25 @@ $ make ping-pong
 $ ./ping-pong
 ```
 
-### Learning
+#### Plotting Heatmap
 
-The CPU core benchmarks contain (for now) some learning code snippets to get
-into pthreads and atomic operations to be able to write core-related benchmarks.
-
-Go through the [Makefile](Makefile) in this directory to find the learning
-benchmarks to build. Then use the following commands to run them.
+The ping-pong benchmark generates a CSV file that can be used to generate a
+heatmap PNG image using Gnuplot.
 
 ```shell
-$ make <benchmark_target_to_build_from_makefile>
-$ ./benchmark-name
+$ make plot-ping-pong-heatmap
 ```
 
-## BIOS Settings
+Sample heatmap for a 64 core server:
+
+![Core-to-Core Latency Heatmap](plots/core-to-core-latency-heatmap.png)
+
+## Settings
+
+Some of these settings make preheating the core (running a loop to awaken the
+core and boost its frequency) less important, especially for amateur benchmarks.
+
+### BIOS
 
 - SMT Disabled
 - CPB Disabled
@@ -47,6 +52,28 @@ $ ./benchmark-name
 - DRAM Scrub Time Disabled
 - DDR4-3200
 - IOMMU Disabled
+
+### Linux OS
+
+- Set the CPU frequency governor to 'performance'
+
+    ```shell
+    $ cpupower frequency-info # available options and current option
+    $ sudo cpupower frequency-set -g performance
+    ```
+
+## Learning
+
+The CPU core benchmarks contain (for now) some learning code snippets to get
+into pthreads and atomic operations to be able to write core-related benchmarks.
+
+Go through the [Makefile](Makefile) in this directory to find the learning
+benchmarks to build. Then use the following commands to run them.
+
+```shell
+$ make <benchmark_target_to_build_from_makefile>
+$ ./benchmark-name
+```
 
 ## Resources
 

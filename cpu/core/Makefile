@@ -3,9 +3,15 @@ CFLAGS = -O2 -pedantic -Wall -Wextra -pthread
 
 all: ping-pong
 
+install-dep:
+	sudo apt-get install -y clang-format gnuplot
+
 ping-pong: src/ping-pong.c
 	$(CC) $(CFLAGS) src/ping-pong.c -o ping-pong
 	chmod +x ping-pong
+
+plot-ping-pong-heatmap: plots/core_to_core_latency_heatmap.gnuplot core-to-core-latency.csv
+	gnuplot plots/core_to_core_latency_heatmap.gnuplot
 
 # Only for learning purposes
 pthread-basics: src/learning/pthread-basics.c
@@ -25,11 +31,8 @@ atomics-basics: src/learning/atomics-basics.c
 clean:
 	rm -f ping-pong pthread-basics pthread-affinity atomics-basics
 
-install-formatter:
-	sudo apt-get install -y clang-format
-
 format:
 	find . -name "*.c" -or -name "*.h" | xargs clang-format -i
 
-.PHONY: all clean install-formatter format
+.PHONY: all install-dep clean format
 

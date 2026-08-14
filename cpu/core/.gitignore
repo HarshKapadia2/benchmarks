@@ -1,7 +1,13 @@
 *.out
+*.csv
+*.png
 
 ping-pong
 pthread-basics
 pthread-affinity
 atomics-basics
+
+# Don't ignore these sample files
+!plots/core-to-core-latency.csv
+!plots/core-to-core-latency-heatmap.png
 
