@@ -1,13 +1,13 @@
 # CPU Benchmarks
 
-A collection of benchmarks for measuring various CPU / SoC metrics.
+A collection of benchmarks for measuring various CPU / SoC metrics for learning
+purposes.
 
-NOTE: Please **do not use these benchmarks in production**. I am not an expert
-in benchmarking and the benchmarks that I have written do not provide the most
-optimized results.
+NOTE: These are **not production-level benchmarks** and are only for
+educational purposes. Results are **not** representative of actual performance.
 
 ## Benchmarks
 
 - CPU
-    - [Cache](cpu/cache)
     - [Core](cpu/core)
+    - [Cache](cpu/cache)
