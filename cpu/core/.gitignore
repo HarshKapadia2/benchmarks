@@ -7,7 +7,7 @@ pthread-basics
 pthread-affinity
 atomics-basics
 
-# Don't ignore these sample files
-!plots/core-to-core-latency.csv
-!plots/core-to-core-latency-heatmap.png
+# Don't ignore these sample plot files
+!plots/samples/*/*.csv
+!plots/samples/*/*.png
 
