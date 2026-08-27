@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -O2 -pedantic -Wall -Wextra -pthread
 
-all: ping-pong
+all: ping-pong false-sharing not-false-sharing
 
 install-dep:
 	sudo apt-get install -y clang-format gcc gnuplot
@@ -12,6 +12,14 @@ ping-pong: src/ping-pong.c
 
 plot-ping-pong-heatmap: plots/core-to-core-latency-heatmap.gnuplot core-to-core-latency.csv
 	gnuplot plots/core-to-core-latency-heatmap.gnuplot
+
+false-sharing: src/false-sharing.c
+	$(CC) $(CFLAGS) src/false-sharing.c -o false-sharing
+	chmod +x false-sharing
+
+not-false-sharing: src/not-false-sharing.c
+	$(CC) $(CFLAGS) src/not-false-sharing.c -o not-false-sharing
+	chmod +x not-false-sharing
 
 # Only for learning purposes
 pthread-basics: src/learning/pthread-basics.c
@@ -29,7 +37,7 @@ atomics-basics: src/learning/atomics-basics.c
 	chmod +x atomics-basics
 
 clean:
-	rm -f ping-pong pthread-basics pthread-affinity atomics-basics
+	rm -f ping-pong false-sharing not-false-sharing pthread-basics pthread-affinity atomics-basics
 
 format:
 	find . -name "*.c" -or -name "*.h" | xargs clang-format -i

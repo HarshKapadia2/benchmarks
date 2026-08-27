@@ -1,8 +1,11 @@
 *.out
 *.csv
 *.png
+*.swp
 
 ping-pong
+false-sharing
+not-false-sharing
 pthread-basics
 pthread-affinity
 atomics-basics
