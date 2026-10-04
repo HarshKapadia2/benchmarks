@@ -1,4 +1,4 @@
-# CPU Benchmarks
+# Benchmarks
 
 A collection of benchmarks for measuring various CPU / SoC metrics for learning
 purposes.
@@ -11,3 +11,5 @@ educational purposes. Results are **not** representative of actual performance.
 - CPU
     - [Core](cpu/core)
     - [Cache](cpu/cache)
+- Memory
+    - [Stream](memory/stream)

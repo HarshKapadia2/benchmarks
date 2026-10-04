@@ -1,0 +1,86 @@
+#! /bin/bash
+
+set -Eeuo pipefail
+
+if [[ ! -f "./stream" ]]; then
+	echo "Stream binary missing. Compiling the program and then running it..."
+
+	make
+
+	sleep 1
+fi
+
+cpu_counts=(1 2 4 8 16 24 32 40 48 56 64)
+
+declare -A cpu_list_compact=(
+	[1]="0"
+	[2]="0-1"
+	[4]="0-3"
+	[8]="0-7"
+	[16]="0-15"
+	[24]="0-23"
+	[32]="0-31"
+	[40]="0-39"
+	[48]="0-47"
+	[56]="0-55"
+	[64]="0-63"
+)
+
+declare -A cpu_list_ccd_round_robin=(
+	[1]="0"
+	[2]="0,8"
+	[4]="0,8,16,24"
+	[8]="0,8,16,24,32,40,48,56"
+	[16]="0-1,8-9,16-17,24-25,32-33,40-41,48-49,56-57"
+	[24]="0-2,8-10,16-18,24-26,32-34,40-42,48-50,56-58"
+	[32]="0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59"
+	[40]="0-4,8-12,16-20,24-28,32-36,40-44,48-52,56-60"
+	[48]="0-5,8-13,16-21,24-29,32-37,40-45,48-53,56-61"
+	[56]="0-6,8-14,16-22,24-30,32-38,40-46,48-54,56-62"
+	[64]="0-63"
+)
+
+# Begin testing
+
+echo "STREAM Benchmarking"
+echo ""
+echo ""
+echo "Compact CPU assignment"
+echo "E.g.: CPU numbers would be 0, 1, 2, 3, 4, 5..."
+echo ""
+
+rm  -rf stream-compact-cpu.csv
+echo \
+	"num_cpus,copy_gigabytespersec,scale_gigabytespersec,add_gigabytespersec,triad_gigabytespersec" \
+	| tee -a stream-compact-cpu.csv
+
+for num_cpus in "${cpu_counts[@]}"; do
+	OMP_PROC_BIND=true \
+		OMP_PLACES=cores \
+		OMP_DYNAMIC=false \
+		OMP_NUM_THREADS="${num_cpus}" \
+		numactl --physcpubind="${cpu_list_compact[${num_cpus}]}" \
+		./stream \
+		| tee -a stream-compact-cpu.csv
+done
+
+echo ""
+echo ""
+echo "CCD round-robin CPU assignment"
+echo "E.g.: Taking 8-core CCDs, CPU numbers would be 0, 8, 16, 24, 32, 40..."
+echo ""
+
+rm  -rf stream-ccd-round-robin.csv
+echo \
+	"num_cpus,copy_gigabytespersec,scale_gigabytespersec,add_gigabytespersec,triad_gigabytespersec" \
+	| tee -a stream-ccd-round-robin.csv
+
+for num_cpus in "${cpu_counts[@]}"; do
+	OMP_PROC_BIND=true \
+		OMP_PLACES=cores \
+		OMP_DYNAMIC=false \
+		OMP_NUM_THREADS="${num_cpus}" \
+		numactl --physcpubind="${cpu_list_ccd_round_robin[${num_cpus}]}" \
+		./stream \
+		| tee -a stream-ccd-round-robin.csv
+done

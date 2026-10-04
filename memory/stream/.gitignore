@@ -1,0 +1,12 @@
+*.out
+*.csv
+*.png
+*.swp
+
+stream
+openmp-basics
+
+# Don't ignore these sample plot files
+!plots/samples/*.csv
+!plots/samples/*.png
+
