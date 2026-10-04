@@ -196,6 +196,13 @@ measured latency.
     $ sudo cpupower frequency-set -g performance
     ```
 
+### CPU
+
+An AMD Zen 3 CPU was used for the sample measurements.
+
+NOTE: These are **not production-level benchmarks** and are only for
+educational purposes. Results are **not** representative of actual performance.
+
 ## Learning
 
 The CPU core benchmarks contain (for now) some learning code snippets to get
